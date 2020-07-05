@@ -102,9 +102,11 @@
                             <output>target/generated-sources</output>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <modelPackage>wkda.common.dto.testdataprovider</modelPackage>
+
                             <configOptions>
                                 <library>spring-cloud</library>
                                 <dateLibrary>joda</dateLibrary>
+                                <sourceFolder>${source.dir}</sourceFolder>
                             </configOptions>
                         </configuration>
                     </execution>

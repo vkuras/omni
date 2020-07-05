@@ -23,11 +23,11 @@
 hs_err_pid*
 
 #intellij
-.iml
+*.iml
 .idea
 .target
 server/target/
-
+dtos/
 # General
 .DS_Store
 .AppleDouble
