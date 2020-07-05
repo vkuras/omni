@@ -23,7 +23,6 @@
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <source.dir>src/main/java</source.dir>
         <testSource.dir>src/test/java</testSource.dir>
-        <yaml-copy.dir>${project.build.outputDirectory}</yaml-copy.dir>
     </properties>
     <dependencies>
         <!--Spring-->
