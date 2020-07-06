@@ -25,7 +25,7 @@ public class OmniController {
         return omniService.create(createDTO);
     }
 
-    @PostMapping("/omni")
+    @PostMapping("/omni/search")
     public List<OmniDTO> searchOmni(OmniSearchDTO searchDTO) {
         log.info("Omni search was called with input {}. Start searching", searchDTO);
         return omniService.search(searchDTO);
