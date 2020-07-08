@@ -1,6 +1,7 @@
 package wkda.enity;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.Entity;
@@ -23,5 +24,6 @@ public class Omni {
     @NotEmpty
     private String omni;
 
-    private DateTime created;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    private DateTime createdOn;
 }
