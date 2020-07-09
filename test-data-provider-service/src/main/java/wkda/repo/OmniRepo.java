@@ -13,5 +13,6 @@ public interface OmniRepo extends CrudRepository<Omni, UUID> {
 
     public List<Omni> findByDataTypeOrderByCreatedOnAsc(String dataType, Pageable page);
     public void deleteByIdIn(List<UUID> ids);
+    public void deleteByDataType(String dataType);
 
 }
