@@ -15,6 +15,7 @@
     <properties>
         <flyway.version>6.5.0</flyway.version>
         <lombok.version>1.18.12</lombok.version>
+        <maven-compiler-plugin.verslsion>3.8.1</maven-compiler-plugin.verslsion>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <openapi-generator-version>4.3.1</openapi-generator-version>
@@ -22,6 +23,8 @@
         <spring-cloud-release-train.version>Hoxton.SR6</spring-cloud-release-train.version>
         <jackson.version>2.6.6</jackson.version>
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+        <jackson-datatype-jsr310.version>2.11.1</jackson-datatype-jsr310.version>
+        <usertype.core.version>7.0.0.CR1</usertype.core.version>
         <source.dir>src/main/java</source.dir>
         <testSource.dir>src/test/java</testSource.dir>
     </properties>
@@ -66,7 +69,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.11.1</version>
+            <version>${jackson-datatype-jsr310.version}</version>
         </dependency>
 
         <dependency>
@@ -89,7 +92,7 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.8.1</version>
+            <version>${maven-compiler-plugin.version}</version>
         </dependency>
 
         <dependency>
@@ -100,7 +103,7 @@
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
-            <version>7.0.0.CR1</version>
+            <version>${usertype.core.version}</version>
         </dependency>
     </dependencies>
 

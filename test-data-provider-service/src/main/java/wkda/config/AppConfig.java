@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySources;
 @Configuration
 @ComponentScan(basePackages = {"wkda"})
 @PropertySources({
-        @PropertySource("classpath:/test-data-provider.properties")
+        @PropertySource("classpath:/test-data-provider-service.properties")
 })
 
 public class AppConfig {
