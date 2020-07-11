@@ -32,7 +32,7 @@ public class OmniConverter {
     }
 
     public OmniDTO convert(Omni omniEntity) throws JsonProcessingException {
-        log.debug("Start converting omni Entity {}");
+        log.debug("Start converting omni Entity {}",omniEntity);
         OmniDTO omniDTO = new OmniDTO();
         BeanUtils.copyProperties(omniEntity, omniDTO);
         omniDTO.setOmni(mapper.readValue(omniEntity.getOmni(), Object.class));
@@ -40,8 +40,8 @@ public class OmniConverter {
     }
 
     public List<OmniDTO> convert(List<Omni> omniEntities) throws JsonProcessingException {
-        log.debug("Start converting omni Entities {}");
-        List<OmniDTO> omniDTOS = new ArrayList<OmniDTO>(omniEntities.size());
+        log.debug("Start converting omni Entities {}",omniEntities);
+        List<OmniDTO> omniDTOS = new ArrayList<>(omniEntities.size());
         for (Omni omniEntity : omniEntities) {
             omniDTOS.add(convert(omniEntity));
         }

@@ -194,14 +194,14 @@ public class OmniTest {
         given()
                 .header("content-type", ContentType.JSON)
                 .baseUri(String.format("http://localhost:%s", port))
-                .basePath(String.format("/omni/purge/all"))
+                .basePath("/omni/purge/all")
 
                 .when()
                 .delete()
                 .prettyPeek();
         //@formatter:on
-        assertEquals(new Long(0),repo.countByDataType(dataTypeDelete));
-        assertEquals(new Long(0),repo.countByDataType(dataTypeKeep));
+        assertEquals(0,repo.countByDataType(dataTypeDelete).longValue());
+        assertEquals(0,repo.countByDataType(dataTypeKeep).longValue());
     }
     @Test
     public void searchTest() throws JsonProcessingException {
@@ -218,7 +218,7 @@ public class OmniTest {
         given()
                 .header("content-type", ContentType.JSON)
                 .baseUri(String.format("http://localhost:%s", port))
-                .basePath(String.format("/omni/search"))
+                .basePath("/omni/search")
                 .body(mapper.writeValueAsString(searchDTO))
         .when()
                 .post()
@@ -229,7 +229,7 @@ public class OmniTest {
                 .body("id[0]",equalTo(printId(omniDTO.getId())))
                 .body("id[1]",nullValue());
         //@formatter:on
-        assertEquals(new Long(2),repo.countByDataType(dataTypeSearch));
+        assertEquals(2,repo.countByDataType(dataTypeSearch).longValue());
 
     }
 
@@ -251,8 +251,8 @@ public class OmniTest {
                 .delete()
                 .prettyPeek();
         //@formatter:on
-        assertEquals(new Long(0),repo.countByDataType(dataTypeDelete));
-        assertEquals(new Long(1),repo.countByDataType(dataTypeKeep));
+        assertEquals(0,repo.countByDataType(dataTypeDelete).longValue());
+        assertEquals(1,repo.countByDataType(dataTypeKeep).longValue());
 
     }
     private String printTime(LocalDateTime time) {
