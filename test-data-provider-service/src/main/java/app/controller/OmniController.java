@@ -1,5 +1,6 @@
-package wkda.controller;
+package app.controller;
 
+import app.service.OmniService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import wkda.common.dto.testdataprovider.OmniCreateDTO;
 import wkda.common.dto.testdataprovider.OmniDTO;
 import wkda.common.dto.testdataprovider.OmniSearchDTO;
-import wkda.service.OmniService;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -28,7 +28,7 @@ public class OmniController {
     }
 
     @PostMapping("/omni/search")
-    public List<OmniDTO> searchOmni(OmniSearchDTO searchDTO) {
+    public List<OmniDTO> searchOmni(@RequestBody OmniSearchDTO searchDTO) throws JsonProcessingException {
         log.debug("Omni search was called with input {}. Start searching", searchDTO);
         return omniService.search(searchDTO);
     }
