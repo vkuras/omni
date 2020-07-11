@@ -13,6 +13,7 @@
     <artifactId>test-data-provider-service</artifactId>
     <version>2.0</version>
     <properties>
+        <embedded-database-spring-test.version>1.5.4</embedded-database-spring-test.version>
         <flyway.version>6.5.0</flyway.version>
         <lombok.version>1.18.12</lombok.version>
         <maven-compiler-plugin.verslsion>3.8.1</maven-compiler-plugin.verslsion>
@@ -114,7 +115,7 @@
         <dependency>
             <groupId>io.zonky.test</groupId>
             <artifactId>embedded-database-spring-test</artifactId>
-            <version>1.5.4</version>
+            <version>${embedded-database-spring-test.version}</version>
         </dependency>
         <!--rest assured-->
         <dependency>
