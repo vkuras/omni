@@ -1,5 +1,8 @@
-package wkda.service;
+package app.service;
 
+import app.converter.OmniConverter;
+import app.enity.Omni;
+import app.repo.OmniRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -9,9 +12,6 @@ import org.springframework.stereotype.Component;
 import wkda.common.dto.testdataprovider.OmniCreateDTO;
 import wkda.common.dto.testdataprovider.OmniDTO;
 import wkda.common.dto.testdataprovider.OmniSearchDTO;
-import wkda.converter.OmniConverter;
-import wkda.enity.Omni;
-import wkda.repo.OmniRepo;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -35,10 +35,7 @@ public class OmniService {
         return omniConvert.convert(omniEntity);
     }
 
-    @Transactional
-    public List<OmniDTO> search(OmniSearchDTO searchDTO) {
-        return null;
-    }
+
 
     @Transactional
     public List<OmniDTO> get(String dataType, boolean keep, int amount) throws JsonProcessingException, NotFoundException {
@@ -100,5 +97,12 @@ public class OmniService {
         log.debug("Start deleting omnis {}", omniDTOS);
         omniRepo.deleteByIdIn(ids);
         log.info("Deleted omnis {}", omniDTOS);
+    }
+@Transactional
+    public List<OmniDTO> search(OmniSearchDTO searchDTO) throws JsonProcessingException {
+        log.debug("Start Searching all omnis of type {} created before {}",searchDTO.getDataType(),searchDTO.getCreatedBefore());
+        List<Omni> omnis=omniRepo.findAllWithCreationDateTimeBefore(searchDTO.getCreatedBefore(),searchDTO.getDataType());
+        log.info("Found omnis  which were created before {} of type {}",searchDTO.getCreatedBefore(),searchDTO.getDataType());
+        return omniConvert.convert(omnis);
     }
 }

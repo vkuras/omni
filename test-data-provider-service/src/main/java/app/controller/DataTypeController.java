@@ -1,4 +1,4 @@
-package wkda.controller;
+package app.controller;
 
 public class DataTypeController {
 }

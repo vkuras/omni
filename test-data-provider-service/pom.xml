@@ -25,6 +25,7 @@
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <jackson-datatype-jsr310.version>2.11.1</jackson-datatype-jsr310.version>
         <usertype.core.version>7.0.0.CR1</usertype.core.version>
+        <rest-assured.version>4.2.0</rest-assured.version>
         <source.dir>src/main/java</source.dir>
         <testSource.dir>src/test/java</testSource.dir>
     </properties>
@@ -52,6 +53,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -104,6 +110,30 @@
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
             <version>${usertype.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.zonky.test</groupId>
+            <artifactId>embedded-database-spring-test</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+        <!--rest assured-->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>xml-path</artifactId>
+            <version>${rest-assured.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

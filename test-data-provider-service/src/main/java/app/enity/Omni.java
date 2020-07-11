@@ -1,4 +1,4 @@
-package wkda.enity;
+package app.enity;
 
 import lombok.Data;
 import org.hibernate.annotations.Type;
