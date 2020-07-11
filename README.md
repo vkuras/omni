@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/vkuras/omni.svg?branch=master)](https://travis-ci.org/vkuras/omni)
 # Omni
 ## What  is omni?
 Omni provides a way to save, acess, manage and categorize pregenerated test data.<br/>
