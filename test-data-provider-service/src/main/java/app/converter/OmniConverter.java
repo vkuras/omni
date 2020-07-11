@@ -3,13 +3,13 @@ package app.converter;
 import app.enity.Omni;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.dto.testdataprovider.OmniCreateDTO;
+import common.dto.testdataprovider.OmniDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import wkda.common.dto.testdataprovider.OmniCreateDTO;
-import wkda.common.dto.testdataprovider.OmniDTO;
 
 import java.util.ArrayList;
 import java.util.List;

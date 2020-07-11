@@ -4,14 +4,14 @@ import app.converter.OmniConverter;
 import app.enity.Omni;
 import app.repo.OmniRepo;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import common.dto.testdataprovider.OmniCreateDTO;
+import common.dto.testdataprovider.OmniDTO;
+import common.dto.testdataprovider.OmniSearchDTO;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import wkda.common.dto.testdataprovider.OmniCreateDTO;
-import wkda.common.dto.testdataprovider.OmniDTO;
-import wkda.common.dto.testdataprovider.OmniSearchDTO;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;

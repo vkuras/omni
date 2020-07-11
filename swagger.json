@@ -1,0 +1,395 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "test-data-provider-service",
+    "version": "2.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080"
+    }
+  ],
+  "paths": {
+    "/omni": {
+      "post": {
+        "summary": "Adds one instance of test data to the queue",
+        "description": "",
+        "operationId": "createOmni",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OmniCreateDTO"
+              }
+            }
+          },
+          "description": "Omni Object which represents one item in the queue",
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OmniDTO"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "No data_type or omni given"
+          }
+        },
+        "tags": [
+          "omni"
+        ]
+      }
+    },
+    "/omni/search": {
+      "post": {
+        "operationId": "searchOmni",
+        "description": "Searches for omnis. Results stay in queue",
+        "tags": [
+          "omni"
+        ],
+        "summary": "Provides omni",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OmniSearchDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Returns omnis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OmniDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No omni for type was found"
+          }
+        }
+      }
+    },
+    "/omni/{dataType}": {
+      "get": {
+        "operationId": "getOmni",
+        "tags": [
+          "omni"
+        ],
+        "summary": "Provides omni",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataType",
+            "description": "Data type of the object you wanna get",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "keep",
+            "description": "Decides whether to keep the omni in the queue. Omni will be removed if it's not given",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "amount",
+            "description": "How may omnis you want default is 1",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns omnis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OmniDTO"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No omni for type was found"
+          }
+        }
+      }
+    },
+    "/omni/purge/{dataType}": {
+      "delete": {
+        "operationId": "purgeQueueForDataType",
+        "tags": [
+          "omni"
+        ],
+        "summary": "removes alls omnis of one data type",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "dataType",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Data type not Found"
+          },
+          "409": {
+            "description": "No data type was given"
+          }
+        }
+      }
+    },
+    "/omni/purge/all": {
+      "delete": {
+        "operationId": "purgeAll",
+        "tags": [
+          "omni"
+        ],
+        "summary": "removes alls omnis",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/omni/delete": {
+      "post": {
+        "operationId": "deleteOmni",
+        "tags": [
+          "omni"
+        ],
+        "summary": "removes  multiple omnis given",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Data type not Found"
+          },
+          "409": {
+            "description": "No data type was given"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "operationId": "getCategories",
+        "tags": [
+          "data types"
+        ],
+        "summary": "returns all categories of data types",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "name of category"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no queues found"
+          }
+        }
+      }
+    },
+    "/data-types/{category}": {
+      "get": {
+        "operationId": "getDataTypesForCategory",
+        "tags": [
+          "data types"
+        ],
+        "summary": "gets all data types for a category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "category",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data-type/treshold-level": {
+      "post": {
+        "operationId": "setTresholdLevel",
+        "tags": [
+          "data types"
+        ],
+        "description": "sets treshold levels for a data-type",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Data type not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CategoryDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "dataTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataTypeDTO"
+            }
+          }
+        }
+      },
+      "DataTypeDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "amountOfOmnis": {
+            "type": "integer"
+          },
+          "oldestOmni": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "treshholdLevels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TreshholdLevelDTO"
+            }
+          }
+        }
+      },
+      "TreshholdLevelDTO": {
+        "type": "object",
+        "properties": {
+          "minAmount": {
+            "type": "integer"
+          },
+          "filling": {
+            "type": "string",
+            "enum": [
+              "green",
+              "yellow",
+              "red"
+            ]
+          }
+        }
+      },
+      "OmniSearchDTO": {
+        "type": "object",
+        "properties": {
+          "dataType": {
+            "type": "string"
+          },
+          "createdBefore": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "OmniCreateDTO": {
+        "type": "object",
+        "properties": {
+          "dataType": {
+            "type": "string"
+          },
+          "omni": {
+            "type": "object"
+          }
+        }
+      },
+      "OmniDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "dataType": {
+            "type": "string"
+          },
+          "omni": {
+            "type": "object"
+          },
+          "createdOn": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
