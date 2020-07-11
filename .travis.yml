@@ -5,5 +5,5 @@ jdk:
 job:
   include:
     - stage: test
-      script: mvn test ./test-data-provider-service
+      script: mvn test -f test-data-provider-service/pom.xml
 
