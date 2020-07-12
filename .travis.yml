@@ -1,9 +1,13 @@
 language: java
+services:
+  - docker
 sudo: false
 jdk:
   - openjdk11
 job:
   include:
-    - stage: test
-      script: mvn test -f test-data-provider-service/pom.xml
+    - stage: build application
+      script: mvn package -f test-data-provider-service/pom.xml
+    - stage: build docker
+      script: docker-compose built
 
