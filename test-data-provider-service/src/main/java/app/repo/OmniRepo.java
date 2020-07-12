@@ -19,9 +19,14 @@ public interface OmniRepo extends JpaRepository<Omni, UUID> {
     public void deleteByDataType(String dataType);
     public Long countByDataType(String dataType);
     @Query("select a from Omni a where a.dataType=:dataType and a.createdOn <= :creationDateTime")
-    List<Omni> findAllWithCreationDateTimeBefore(
+    public List<Omni> findAllWithCreationDateTimeBefore(
             @Param("creationDateTime") DateTime creationDateTime,
             @Param("dataType") String dataType);
+
+    @Query("SELECT DISTINCT o.dataType FROM Omni o WHERE o.dataType NOT IN (:dataTypes)")
+    public List<String> findDistinctByDataTypeNotIn(@Param("dataTypes") List<String>  dataTypes);
+    @Query("SELECT DISTINCT o.dataType FROM Omni o")
+    public List<String> findAllDataTypes();
 
 
 }

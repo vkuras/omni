@@ -90,7 +90,7 @@ paths:
                   $ref: "#/components/schemas/OmniDTO"
         "404":
           description: No omni for type was found
-  "/omni/purge/{dataType}":
+  /omni/purge/{dataType}:
     delete:
       operationId: purgeQueueForDataType
       tags:
@@ -139,56 +139,99 @@ paths:
           description: Data type not Found
         "409":
           description: No data type was given
-  /categories:
+  "/data-type/categories":
     get:
       operationId: getCategories
       tags:
         - data types
-      summary: returns all categories of data types
+      summary: returns all categories
       responses:
         "200":
           description: OK
           content:
-            "*/*":
+            application/json:
               schema:
                 type: array
                 items:
                   type: string
                   description: name of category
         "404":
-          description: no queues found
-  "/data-types/{category}":
+          description: "no queues found"
+  "/data-type/{category}":
     get:
-      operationId: getDataTypesForCategory
+      operationId: getDataTypes
       tags:
         - data types
-      summary: gets all data types for a category
+      summary: returns all data types for a category
       parameters:
         - in: path
-          name: category
           required: true
+          name: category
           schema:
             type: string
       responses:
         "200":
           description: OK
           content:
-            "*/*":
+            application/json:
               schema:
-                $ref: "#/components/schemas/CategoryDTO"
-  /data-type/treshold-level:
-    post:
-      operationId: setTresholdLevel
-      tags:
-        - data types
-      description: sets treshold levels for a data-type
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataTypeDTO'
+        "404":
+          description: "no queues found"
+  /data-type/threshold:
+    patch:
+      summary: "sets threshold"
+      description: "sets threshold"
+      operationId: createThreshold
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ThresholdLevelCreateDTO'
+        description: "sets threshold"
+        required: true
       responses:
         "200":
-          description: OK
+          description: Updated
         "404":
-          description: Data type not found
+          description: Not found
+      tags:
+        - data types
+  /data-type/category:
+    patch:
+      summary: "sets category"
+      description: "sets category"
+      operationId: createCategory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryUpdateDTO'
+        description: "sets threshold"
+        required: true
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryDTO'
+        "404":
+          description: Not found
+      tags:
+        - data types
 components:
   schemas:
+    CategoryUpdateDTO:
+      type: object
+      properties:
+        dataTypeId:
+          type: string
+          format: uuid
+        category:
+          type: string
     CategoryDTO:
       type: object
       properties:
@@ -203,16 +246,32 @@ components:
       properties:
         name:
           type: string
+        id:
+          type: string
+          format: uuid
         amountOfOmnis:
           type: integer
         oldestOmni:
           type: string
           format: date-time
-        treshholdLevels:
+          description: time when oldest omni was created
+        category:
+          type: string
+        thresholdLevels:
           type: array
           items:
-            $ref: "#/components/schemas/TreshholdLevelDTO"
-    TreshholdLevelDTO:
+            $ref: "#/components/schemas/ThresholdLevelDTO"
+    ThresholdLevelCreateDTO:
+      type: object
+      properties:
+        testDataid:
+          type: string
+          format: uuid
+        thresholdLevel:
+          type: array
+          items:
+            $ref: "#/components/schemas/ThresholdLevelDTO"
+    ThresholdLevelDTO:
       type: object
       properties:
         minAmount:
