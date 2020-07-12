@@ -141,14 +141,14 @@ public class DataTypeService {
         dataType.setCreatedOn(DateTime.now());
         return dataType;
     }
-
+    @Transactional
     public void setCategory(CategoryUpdateDTO categoryUpdateDTO) {
         DataType dataType=dataTypeRepo.findById(categoryUpdateDTO.getDataTypeId()).get();
         dataType.setCategory(categoryUpdateDTO.getCategory());
         dataTypeRepo.save(dataType);
         log.info("Saved data type {}",dataType);
     }
-
+    @Transactional
     public void setThreshold(ThresholdLevelCreateDTO thresholdLevelCreateDTO) {
         DataType dataType=dataTypeRepo.findById(thresholdLevelCreateDTO.getTestDataid()).get();
         //todo
