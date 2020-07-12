@@ -93,7 +93,13 @@ public class DataTypeService {
         log.info("Getting all data types of category {},which have already an entry in categories", others);
         List<DataType> knownOtherDataTypes = dataTypeRepo.findByCategory(others);
         List<String> allDataTypeNamesWithCategory = dataTypeRepo.findAllDataTypesByNames();
-        List<String> unknownDataTypeNames = omniRepo.findDistinctByDataTypeNotIn(allDataTypeNamesWithCategory);
+        List<String> unknownDataTypeNames=null;
+        if(!allDataTypeNamesWithCategory.isEmpty()) {
+            unknownDataTypeNames = omniRepo.findDistinctByDataTypeNotIn(allDataTypeNamesWithCategory);
+        }
+        else {
+            unknownDataTypeNames=omniRepo.findAllDataTypes();
+        }
         List<DataType> unknownDataTypes = new ArrayList<>(unknownDataTypeNames.size());
         if (!unknownDataTypeNames.isEmpty()) {
             unknownDataTypeNames.stream().forEach(dataTypeName -> {

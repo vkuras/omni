@@ -5,9 +5,12 @@ import app.converter.OmniConverter;
 import app.enity.DataType;
 import app.repo.DataTypeRepo;
 import app.repo.OmniRepo;
+import app.service.DataTypeService;
 import app.service.OmniService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.dto.testdataprovider.CategoryUpdateDTO;
+import common.dto.testdataprovider.DataTypeDTO;
 import common.dto.testdataprovider.OmniCreateDTO;
 import dto.CarDTO;
 import io.restassured.http.ContentType;
@@ -27,6 +30,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.Assert;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -50,6 +54,8 @@ public class DataTypeTest {
     private ObjectMapper mapper;
     @Autowired
     private OmniService omniService;
+    @Autowired
+    private DataTypeService dataTypeServiceService;
     @Autowired
     private DataTypeRepo dataTypeRepo;
     @Autowired
@@ -128,7 +134,72 @@ public class DataTypeTest {
                 .body("name", not(contains(dataTypeName2)));
         //@formatter:on
     }
+    @Test
+    public void getUncategorizedDataTypesTest() throws JsonProcessingException {
+        String dataTypeName1="categorized";
+        String catregory1="myCategory";
+        String dataTypeName2="categorized2";
+        String catregory2="myCategory2";
+        omniRepo.save(omniConverter.convert(createTestOmni(dataTypeName1)));
+        omniRepo.save(omniConverter.convert(createTestOmni(dataTypeName2)));
+        dataTypeRepo.save(createDataType(dataTypeName1,catregory1));
 
+        //@formatter:off
+        given()
+                .header("content-type", ContentType.JSON)
+                .baseUri(String.format("http://localhost:%s", port))
+                .basePath("data-type/"+others)
+                .when()
+                .get()
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .body("name[0]", equalTo(dataTypeName2))
+                .body("amountOfOmnis[0]",equalTo(1))
+                .body("category[0]",equalTo(others))
+                .body("oldestOmni[0]",notNullValue())
+                .body("name", not(contains(dataTypeName1)));
+        //@formatter:on
+        Assert.notEmpty(dataTypeRepo.findByCategory(others));
+    }
+    @Test
+    public void addCategoryTest() throws JsonProcessingException {
+        String dataTypeName1="dataType1";
+        String catregory1="myCategory";
+        String dataTypeName2="dataType2";
+
+        omniRepo.save(omniConverter.convert(createTestOmni(dataTypeName1)));
+        omniRepo.save(omniConverter.convert(createTestOmni(dataTypeName2)));
+
+
+        DataTypeDTO dataTypeDTOS=dataTypeServiceService.getDataTypes(others)
+                .stream()
+                .filter(dataTypeDTO -> dataTypeDTO.getName().equals(dataTypeName1))
+                .findAny()
+                .get();
+        CategoryUpdateDTO categoryUpdateDTO=new CategoryUpdateDTO();
+        categoryUpdateDTO.setCategory(catregory1);
+        categoryUpdateDTO.setDataTypeId(dataTypeDTOS.getId());
+
+        //@formatter:off
+        given()
+                .header("content-type", ContentType.JSON)
+                .baseUri(String.format("http://localhost:%s", port))
+                .basePath("data-type/category")
+                .body(categoryUpdateDTO)
+        .when()
+                .patch()
+                .then()
+                .assertThat()
+                .statusCode(HttpStatus.OK.value())
+                .body("name[0]", equalTo(dataTypeName1))
+                .body("amountOfOmnis[0]",equalTo(1))
+                .body("category[0]",equalTo(catregory1))
+                .body("oldestOmni[0]",notNullValue())
+                .body("name", not(contains(dataTypeName2)));
+        //@formatter:on
+        Assert.notEmpty(dataTypeRepo.findByCategory(catregory1));
+    }
     @After
     public void emptyDb() {
         dataTypeRepo.deleteAll();
