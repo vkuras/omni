@@ -12,12 +12,13 @@ Omni provides a way to generate test data in advance and retrieve it with just o
 down times of partner systems. 
 
 As you need only one call in your test instead of multiple hundreds, your test will be way faster.
+
+## How to deploy?
 ## How can i use omni?
 Omnis api is defined via open api. So you can easily use it with all common languages.
 For using omni you need three components.
-* Omni
+* Omni (see how to deploy)
 * An integration into your test framework <br/>
-You can find a detailed explanation and an example implementation in test-client
+You can find a detailed explanation and an example implementation in client
 * A way to generate data<br/>
-You can find a detailed explanation and an example in data-generation client
-## How to deploy?
+You can find a detailed explanation and an example in client

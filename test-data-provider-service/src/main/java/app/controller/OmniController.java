@@ -2,13 +2,13 @@ package app.controller;
 
 import app.service.OmniService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import common.dto.testdataprovider.OmniCreateDTO;
+import common.dto.testdataprovider.OmniDTO;
+import common.dto.testdataprovider.OmniSearchDTO;
 import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import wkda.common.dto.testdataprovider.OmniCreateDTO;
-import wkda.common.dto.testdataprovider.OmniDTO;
-import wkda.common.dto.testdataprovider.OmniSearchDTO;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

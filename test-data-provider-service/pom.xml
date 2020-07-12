@@ -136,6 +136,8 @@
             <version>${rest-assured.version}</version>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <build>
@@ -162,7 +164,7 @@
                             <generateApis>false</generateApis>
                             <output>target/generated-sources</output>
                             <generateSupportingFiles>false</generateSupportingFiles>
-                            <modelPackage>wkda.common.dto.testdataprovider</modelPackage>
+                            <modelPackage>common.dto.testdataprovider</modelPackage>
 
                             <configOptions>
                                 <library>spring-cloud</library>

@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  postgres:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: myuser
+  test-data-provider-service:
+    build:
+      dockerfile: ./test-data-provider-service/Dockerfile
+      context: .
+    ports:
+      - "5001:8080"
+    expose:
+      - 8080
+
