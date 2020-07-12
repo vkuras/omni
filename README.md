@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/vkuras/omni.svg?branch=master)](https://travis-ci.org/vkuras/omni)
 # Omni
 ## What  is omni?
-Omni provides a way to save, acess, manage and categorize pregenerated test data.<br/>
+Omni provides a way to save, access, manage and categorize pregenerated test data.<br/>
 It provides a service for your automation tests and a web ui for your manual tests.
 ## Why should I use omni?
 Test data generation takes a lot of time. Furthermore it's really error prone. <br/>
@@ -14,7 +14,12 @@ down times of partner systems.
 As you need only one call in your test instead of multiple hundreds, your test will be way faster.
 
 ## How to deploy?
-## How can i use omni?
+
+```
+docker-compose run
+```
+Please change users and password if you don't deploy on your machine
+## How can I use omni?
 Omnis api is defined via open api. So you can easily use it with all common languages.
 For using omni you need three components.
 * Omni (see how to deploy)
