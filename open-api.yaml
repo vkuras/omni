@@ -180,25 +180,21 @@ paths:
                   $ref: '#/components/schemas/DataTypeDTO'
         "404":
           description: "no queues found"
-  /data-type/treshold:
+  /data-type/threshold:
     patch:
-      summary: "ssets treshold"
-      description: "sets treshold"
-      operationId: createTreshold
+      summary: "sets threshold"
+      description: "sets threshold"
+      operationId: createThreshold
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TreshholdLevelCreateDTO'
-        description: "sets treshold"
+              $ref: '#/components/schemas/ThresholdLevelCreateDTO'
+        description: "sets threshold"
         required: true
       responses:
         "200":
           description: Updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DataTypeDTO'
         "404":
           description: Not found
       tags:
@@ -213,7 +209,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CategoryUpdateDTO'
-        description: "sets treshold"
+        description: "sets threshold"
         required: true
       responses:
         "200":
@@ -261,20 +257,21 @@ components:
           description: time when oldest omni was created
         category:
           type: string
-        treshholdLevels:
+        thresholdLevels:
           type: array
           items:
-            $ref: "#/components/schemas/TreshholdLevelDTO"
-    TreshholdLevelCreateDTO:
+            $ref: "#/components/schemas/ThresholdLevelDTO"
+    ThresholdLevelCreateDTO:
       type: object
       properties:
-        dataType:
+        testDataid:
           type: string
-        treshholdLevel:
+          format: uuid
+        thresholdLevel:
           type: array
           items:
-            $ref: "#/components/schemas/TreshholdLevelDTO"
-    TreshholdLevelDTO:
+            $ref: "#/components/schemas/ThresholdLevelDTO"
+    ThresholdLevelDTO:
       type: object
       properties:
         minAmount:

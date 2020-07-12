@@ -1,23 +1,23 @@
 package app.converter;
 
 import app.enity.DataType;
-import common.dto.testdataprovider.TreshholdLevelDTO;
+import common.dto.testdataprovider.ThresholdLevelDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ThresholdConverter {
-    public static List<TreshholdLevelDTO> convert(DataType dataTypeEntity) {
-        TreshholdLevelDTO red = new TreshholdLevelDTO();
+    public static List<ThresholdLevelDTO> convert(DataType dataTypeEntity) {
+        ThresholdLevelDTO red = new ThresholdLevelDTO();
         red.setMinAmount(dataTypeEntity.getMinimumRed());
-        red.setFilling(TreshholdLevelDTO.FillingEnum.RED);
-        TreshholdLevelDTO green = new TreshholdLevelDTO();
+        red.setFilling(ThresholdLevelDTO.FillingEnum.RED);
+        ThresholdLevelDTO green = new ThresholdLevelDTO();
         green.setMinAmount(dataTypeEntity.getMinimumGreen());
-        green.setFilling(TreshholdLevelDTO.FillingEnum.GREEN);
-        TreshholdLevelDTO yellow = new TreshholdLevelDTO();
+        green.setFilling(ThresholdLevelDTO.FillingEnum.GREEN);
+        ThresholdLevelDTO yellow = new ThresholdLevelDTO();
         yellow.setMinAmount(dataTypeEntity.getMinimumYellow());
-        yellow.setFilling(TreshholdLevelDTO.FillingEnum.YELLOW);
-        List<TreshholdLevelDTO> dtos = new ArrayList<>(3);
+        yellow.setFilling(ThresholdLevelDTO.FillingEnum.YELLOW);
+        List<ThresholdLevelDTO> dtos = new ArrayList<>(3);
         dtos.add(red);
         dtos.add(yellow);
         dtos.add(green);

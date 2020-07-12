@@ -6,7 +6,7 @@ CREATE TABLE if not exists test_data_provider.omni (
                                                        created_on timestamp with time zone NOT NULL
 );
 
-CREATE TABLE if not exists test_data_provider.data_types (
+CREATE TABLE if not exists test_data_provider.data_type (
                                                            id UUID NOT NULL,
                                                            name TEXT NOT NULL,
                                                            category TEXT,

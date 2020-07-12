@@ -5,8 +5,12 @@ import app.enity.DataType;
 import app.repo.DataTypeRepo;
 import app.repo.OmniRepo;
 import com.google.common.base.Preconditions;
+import common.dto.testdataprovider.CategoryUpdateDTO;
 import common.dto.testdataprovider.DataTypeDTO;
+import common.dto.testdataprovider.ThresholdLevelCreateDTO;
+import common.dto.testdataprovider.ThresholdLevelDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +45,11 @@ public class DataTypeService {
         return categoryNames;
     }
 
+    /**
+     * ads other to categoryNames if there are any data types without category
+     * @param categoryNames
+     * @return
+     */
     private List<String> addOtherCatergory(List<String> categoryNames) {
         Preconditions.checkNotNull(categoryNames);
         log.info("Checking if I have non categorized types");
@@ -48,7 +57,8 @@ public class DataTypeService {
         if (categoryNames.isEmpty()) {
             others = omniRepo.findAllDataTypes();
         } else {
-            others = omniRepo.findDistinctByDataTypeNotIn(categoryNames);
+            List<String> categorizedDataTypes=dataTypeRepo.findAllNames();
+            others = omniRepo.findDistinctByDataTypeNotIn(categorizedDataTypes);
         }
         if (!others.isEmpty()) {
             categoryNames.add(this.others);
@@ -79,6 +89,7 @@ public class DataTypeService {
     }
 
     private List<DataTypeDTO> collectUncategorizedDataTypes() {
+        //TODO reduce queries
         log.info("Getting all data types of category {},which have already an entry in categories", others);
         List<DataType> knownOtherDataTypes = dataTypeRepo.findByCategory(others);
         List<String> allDataTypeNamesWithCategory = dataTypeRepo.findAllDataTypesByNames();
@@ -121,6 +132,43 @@ public class DataTypeService {
         dataType.setMinimumGreen(defaultThresholdGreen);
         dataType.setMinimumRed(getDefaultThresholdRed);
         dataType.setMinimumYellow(defaultThresholdYellow);
+        dataType.setCreatedOn(DateTime.now());
         return dataType;
+    }
+
+    public void setCategory(CategoryUpdateDTO categoryUpdateDTO) {
+        DataType dataType=dataTypeRepo.findById(categoryUpdateDTO.getDataTypeId()).get();
+        dataType.setCategory(categoryUpdateDTO.getCategory());
+        dataTypeRepo.save(dataType);
+        log.info("Saved data type {}",dataType);
+    }
+
+    public void setThreshold(ThresholdLevelCreateDTO thresholdLevelCreateDTO) {
+        DataType dataType=dataTypeRepo.findById(thresholdLevelCreateDTO.getTestDataid()).get();
+        //todo
+        ThresholdLevelDTO threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.GREEN)
+                .findFirst()
+                .get();
+        dataType.setMinimumGreen(threshold.getMinAmount());
+        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.YELLOW)
+                .findFirst()
+                .get();
+        dataType.setMinimumYellow(threshold.getMinAmount());
+        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.YELLOW)
+                .findFirst()
+                .get();
+
+        dataType.setMinimumYellow(threshold.getMinAmount());
+        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.RED)
+                .findFirst()
+                .get();
+        dataType.setMinimumRed(threshold.getMinAmount());
+        dataTypeRepo.save(dataType);
+        log.info("Saved data type {}",dataType);
+
     }
 }

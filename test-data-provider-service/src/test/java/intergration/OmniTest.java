@@ -268,7 +268,7 @@ public class OmniTest {
         return id.toString().replace("<","").replace(">","");
 
     }
-
+    //TODO MOVE TO CREATOR
     private OmniCreateDTO createTestOmni(String dataType) {
         CarDTO carDTO = CarDTO.builder()
                 .vin("fnsdkjn")

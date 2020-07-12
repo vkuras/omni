@@ -13,7 +13,7 @@ public class DataTypeConverter {
     public static DataTypeDTO convert(DataType dataTypeEntity) {
         DataTypeDTO dataTypeDTO = new DataTypeDTO();
         BeanUtils.copyProperties(dataTypeEntity, dataTypeDTO);
-        dataTypeDTO.setTreshholdLevels(ThresholdConverter.convert(dataTypeEntity));
+        dataTypeDTO.setThresholdLevels(ThresholdConverter.convert(dataTypeEntity));
         return dataTypeDTO;
     }
 

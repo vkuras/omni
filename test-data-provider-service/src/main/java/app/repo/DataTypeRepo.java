@@ -15,7 +15,8 @@ public interface DataTypeRepo extends JpaRepository<DataType, UUID> {
 
     @Query("SELECT d.name FROM DataType d")
     public List<String> findAllDataTypesByNames();
-
+    @Query("SELECT DISTINCT d.name FROM DataType d")
+    public List<String> findAllNames();
 
     public List<DataType> findByNameNotIn( List<String> excludeTypes);
 
