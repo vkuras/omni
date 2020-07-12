@@ -6,14 +6,13 @@ CREATE TABLE if not exists test_data_provider.omni (
                                                        created_on timestamp with time zone NOT NULL
 );
 
-CREATE TABLE if not exists test_data_provider.category (
+CREATE TABLE if not exists test_data_provider.data_types (
                                                            id UUID NOT NULL,
                                                            name TEXT NOT NULL,
-                                                           data_types TEXT,
-                                                           limit_red integer,
-                                                           limit_yellow integer,
-                                                           limit_green integer,
-                                                           oldest_omni timestamp with time zone,
+                                                           category TEXT,
+                                                           minimum_red integer,
+                                                           minimum_yellow integer,
+                                                           minimum_green integer,
                                                            created_on timestamp with time zone NOT NULL
 );
 
