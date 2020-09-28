@@ -8,6 +8,6 @@ job:
   script:
     - mvn package -f test-data-provider-service/pom.xml
     - docker-compose up -d
-    - sleep 9000
+    - sleep 9
     - mvn test -f client/pom.xml
 
