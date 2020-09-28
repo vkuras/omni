@@ -1,6 +1,6 @@
-package annotations;
+package app.annotations;
 
-import constants.TestDataTypeConstants;
+import app.constants.TestDataTypeConstants;
 
 import java.lang.annotation.*;
 

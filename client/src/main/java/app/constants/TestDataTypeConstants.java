@@ -1,11 +1,11 @@
-package constants;
+package app.constants;
 
-import generators.CarGenerator;
-import generators.CustomerGenerator;
+import app.generators.CarGenerator;
+import app.generators.CustomerGenerator;
+import app.testdata.CarDTO;
+import app.testdata.CustomerDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import testdata.CarDTO;
-import testdata.CustomerDTO;
 
 /**
  * all test data types are listed here. It's used for saving and retrieving the Test data

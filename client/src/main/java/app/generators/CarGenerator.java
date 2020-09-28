@@ -1,10 +1,10 @@
-package generators;
+package app.generators;
 
-import base.AbstractBaseGenerator;
-import constants.TestDataTypeConstants;
+import app.base.AbstractBaseGenerator;
+import app.constants.TestDataTypeConstants;
+import app.testdata.CarDTO;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
-import testdata.CarDTO;
 
 import java.util.UUID;
 

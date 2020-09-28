@@ -1,9 +1,10 @@
-package generators;
+package app.generators;
 
-import base.AbstractBaseGenerator;
-import constants.TestDataTypeConstants;
-import testdata.CustomerDTO;
-
+import app.base.AbstractBaseGenerator;
+import app.constants.TestDataTypeConstants;
+import app.testdata.CustomerDTO;
+import org.springframework.stereotype.Component;
+@Component
 public class CustomerGenerator extends AbstractBaseGenerator {
     @Override
     public Object generate(TestDataTypeConstants testDataTypeConstants){

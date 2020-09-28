@@ -23,10 +23,16 @@ public class DataTypesController {
         return dataTypeService.getCategories();
 
     }
-    @GetMapping("/data-type/{category}")
+    @GetMapping("/data-type/categories/{category}")
     public List<DataTypeDTO> getCategories(@PathVariable(name="category",required = true) String category){
         log.debug("Getting all data types for category {}",category);
         return dataTypeService.getDataTypes(category);
+    }
+
+    @GetMapping("/data-type/{dataType}")
+    public DataTypeDTO getDataType(@PathVariable(name="dataType",required = true) String dataType){
+        log.debug("Getting all data type{}",dataType);
+        return dataTypeService.getDataType(dataType);
     }
     @PatchMapping("/data-type/category")
     public List<DataTypeDTO> setCategory(@RequestBody CategoryUpdateDTO categoryUpdateDTO){

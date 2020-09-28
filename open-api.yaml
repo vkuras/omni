@@ -157,7 +157,7 @@ paths:
                   description: name of category
         "404":
           description: "no queues found"
-  "/data-type/{category}":
+  "/data-type/categories/{category}":
     get:
       operationId: getDataTypes
       tags:
@@ -180,6 +180,26 @@ paths:
                   $ref: '#/components/schemas/DataTypeDTO'
         "404":
           description: "no queues found"
+  "/data-type/{dataType}":
+    get:
+      operationId: getDataType
+      tags:
+        - data types
+      summary: returns a data type
+      parameters:
+        - in: path
+          required: true
+          name: dataType
+          description: name of the data
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataTypeDTO'
   /data-type/threshold:
     patch:
       summary: "sets threshold"

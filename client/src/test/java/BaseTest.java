@@ -1,10 +1,12 @@
-import annotations.TestData;
-import base.AbstractBaseTest;
+import app.annotations.TestData;
+import app.base.AbstractBaseTest;
+import app.testdata.CarDTO;
+import app.testdata.CustomerDTO;
 import org.junit.Assert;
 import org.testng.annotations.Test;
-import testdata.CarDTO;
 
-import static constants.TestDataTypeConstants.BMW;
+import static app.constants.TestDataTypeConstants.BMW;
+import static app.constants.TestDataTypeConstants.Merchant;
 
 public class BaseTest extends AbstractBaseTest {
     @Test
@@ -13,7 +15,12 @@ public class BaseTest extends AbstractBaseTest {
         CarDTO carDTO=getTestData(BMW);
         Assert.assertEquals("BMW",carDTO.getBrand());
     }
-
+    @Test
+    @TestData(testDataType = Merchant)
+    public void getFromQueueTest(){
+        CustomerDTO customerDTO=getTestData(Merchant);
+        Assert.assertTrue(customerDTO.isMerchant());
+    }
     @Test
     @TestData(testDataType = BMW)
     @TestData(testDataType = BMW)

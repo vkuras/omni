@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface DataTypeRepo extends JpaRepository<DataType, UUID> {
     @Query("SELECT DISTINCT d.category FROM DataType d")
     public List<String> findAllCategoryNames();
-
+    @Query DataType findByName(String name);
     @Query("SELECT d.name FROM DataType d")
     public List<String> findAllDataTypesByNames();
     @Query("SELECT DISTINCT d.name FROM DataType d")
