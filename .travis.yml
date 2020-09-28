@@ -7,5 +7,7 @@ jdk:
 job:
   script:
     - mvn package -f test-data-provider-service/pom.xml
-    - docker-compose build
+    - docker-compose up -d
+    - sleep 9
+    - mvn test -f client/pom.xml
 

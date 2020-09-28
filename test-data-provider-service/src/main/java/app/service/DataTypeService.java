@@ -47,6 +47,7 @@ public class DataTypeService {
 
     /**
      * ads other to categoryNames if there are any data types without category
+     *
      * @param categoryNames
      * @return
      */
@@ -57,7 +58,7 @@ public class DataTypeService {
         if (categoryNames.isEmpty()) {
             others = omniRepo.findAllDataTypes();
         } else {
-            List<String> categorizedDataTypes=dataTypeRepo.findAllNames();
+            List<String> categorizedDataTypes = dataTypeRepo.findAllNames();
             others = omniRepo.findDistinctByDataTypeNotIn(categorizedDataTypes);
         }
         if (!others.isEmpty()) {
@@ -93,12 +94,11 @@ public class DataTypeService {
         log.info("Getting all data types of category {},which have already an entry in categories", others);
         List<DataType> knownOtherDataTypes = dataTypeRepo.findByCategory(others);
         List<String> allDataTypeNamesWithCategory = dataTypeRepo.findAllDataTypesByNames();
-        List<String> unknownDataTypeNames=null;
-        if(!allDataTypeNamesWithCategory.isEmpty()) {
+        List<String> unknownDataTypeNames = null;
+        if (!allDataTypeNamesWithCategory.isEmpty()) {
             unknownDataTypeNames = omniRepo.findDistinctByDataTypeNotIn(allDataTypeNamesWithCategory);
-        }
-        else {
-            unknownDataTypeNames=omniRepo.findAllDataTypes();
+        } else {
+            unknownDataTypeNames = omniRepo.findAllDataTypes();
         }
         List<DataType> unknownDataTypes = new ArrayList<>(unknownDataTypeNames.size());
         if (!unknownDataTypeNames.isEmpty()) {
@@ -141,40 +141,57 @@ public class DataTypeService {
         dataType.setCreatedOn(DateTime.now());
         return dataType;
     }
+
     @Transactional
     public void setCategory(CategoryUpdateDTO categoryUpdateDTO) {
-        DataType dataType=dataTypeRepo.findById(categoryUpdateDTO.getDataTypeId()).get();
+        DataType dataType = dataTypeRepo.findById(categoryUpdateDTO.getDataTypeId()).get();
         dataType.setCategory(categoryUpdateDTO.getCategory());
         dataTypeRepo.save(dataType);
-        log.info("Saved data type {}",dataType);
+        log.info("Saved data type {}", dataType);
     }
+
     @Transactional
     public void setThreshold(ThresholdLevelCreateDTO thresholdLevelCreateDTO) {
-        DataType dataType=dataTypeRepo.findById(thresholdLevelCreateDTO.getTestDataid()).get();
+        DataType dataType = dataTypeRepo.findById(thresholdLevelCreateDTO.getTestDataid()).get();
         //todo
-        ThresholdLevelDTO threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
-                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.GREEN)
+        ThresholdLevelDTO threshold = thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling() == ThresholdLevelDTO.FillingEnum.GREEN)
                 .findFirst()
                 .get();
         dataType.setMinimumGreen(threshold.getMinAmount());
-        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
-                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.YELLOW)
+        threshold = thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling() == ThresholdLevelDTO.FillingEnum.YELLOW)
                 .findFirst()
                 .get();
         dataType.setMinimumYellow(threshold.getMinAmount());
-        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
-                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.YELLOW)
+        threshold = thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling() == ThresholdLevelDTO.FillingEnum.YELLOW)
                 .findFirst()
                 .get();
 
         dataType.setMinimumYellow(threshold.getMinAmount());
-        threshold=thresholdLevelCreateDTO.getThresholdLevel().stream()
-                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling()== ThresholdLevelDTO.FillingEnum.RED)
+        threshold = thresholdLevelCreateDTO.getThresholdLevel().stream()
+                .filter(thresholdLevelDTO -> thresholdLevelDTO.getFilling() == ThresholdLevelDTO.FillingEnum.RED)
                 .findFirst()
                 .get();
         dataType.setMinimumRed(threshold.getMinAmount());
         dataTypeRepo.save(dataType);
-        log.info("Saved data type {}",dataType);
+        log.info("Saved data type {}", dataType);
 
+    }
+
+    @Transactional
+    public DataTypeDTO getDataType(String dataTypeName) {
+        Preconditions.checkNotNull(dataTypeName);
+        DataType dataType = dataTypeRepo.findByName(dataTypeName);
+        if (dataType == null) {
+            dataType = new DataType();
+        }
+        DataTypeDTO dataTypeDTO = DataTypeConverter.convert(dataType);
+        dataTypeDTO.setAmountOfOmnis(omniRepo.countByDataType(dataTypeName).intValue());
+        if (dataTypeDTO.getAmountOfOmnis() != 0) {
+            dataTypeDTO.setOldestOmni(omniRepo.findByDataTypeOrderByCreatedOnAsc(dataTypeName, PageRequest.of(0, 1)).get(0).getCreatedOn());
+        }
+        return dataTypeDTO;
     }
 }

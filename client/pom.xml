@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.1.RELEASE</version>
+    </parent>
+    <groupId>vico</groupId>
+    <artifactId>omni-example-client</artifactId>
+    <version>2.0</version>
+    <properties>
+
+        <lombok.version>1.18.12</lombok.version>
+        <maven-compiler-plugin.verslsion>3.8.1</maven-compiler-plugin.verslsion>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <openapi-generator-version>4.3.1</openapi-generator-version>
+        <spring-cloud-open-feign.version>2.2.3.RELEASE</spring-cloud-open-feign.version>
+        <spring-cloud-release-train.version>Hoxton.SR6</spring-cloud-release-train.version>
+        <jackson.version>2.6.6</jackson.version>
+        <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+        <jackson-datatype-jsr310.version>2.11.1</jackson-datatype-jsr310.version>
+        <usertype.core.version>7.0.0.CR1</usertype.core.version>
+        <source.dir>src/main/java</source.dir>
+        <testng.version>7.1.0</testng.version>
+        <testSource.dir>src/test/java</testSource.dir>
+
+    </properties>
+    <dependencies>
+        <!--Spring-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud-release-train.version}</version>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>${spring-cloud-open-feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.2.7.RELEASE</version>
+
+        </dependency>
+
+        <!-- Jackson-->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson-datatype-jsr310.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <!--open api-->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${openapi-generator-version}</version>
+        </dependency>
+        <!--maven-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven-compiler-plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+
+
+    </dependencies>
+
+    <build>
+        <sourceDirectory>${source.dir}</sourceDirectory>
+        <testSourceDirectory>${testSource.dir}</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <generatorName>spring</generatorName>
+                            <inputSpec>${basedir}/../open-api.yaml</inputSpec>
+                            <generateModels>true</generateModels>
+                            <generateApis>true</generateApis>
+                            <output>target/generated-sources</output>
+                            <generateSupportingFiles>true</generateSupportingFiles>
+                            <modelPackage>common.dto.testdataprovider</modelPackage>
+
+                            <configOptions>
+                                <library>spring-cloud</library>
+                                <dateLibrary>joda</dateLibrary>
+                                <sourceFolder>${source.dir}</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
