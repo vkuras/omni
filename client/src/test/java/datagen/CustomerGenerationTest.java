@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Checks if filling the queue works coorectly
+ */
 public class CustomerGenerationTest extends AbstractBaseTest {
     @Autowired
     CustomerGenerator customerGenerator;

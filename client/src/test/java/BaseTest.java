@@ -9,6 +9,8 @@ import static app.constants.TestDataTypeConstants.BMW;
 import static app.constants.TestDataTypeConstants.Merchant;
 
 public class BaseTest extends AbstractBaseTest {
+    //TODO make tests independant from Customer Generation Test
+
     @Test
     @TestData(testDataType = BMW)
     public void generationWhenEmptyQueueTest(){
