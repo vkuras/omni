@@ -18,7 +18,7 @@
         <maven-compiler-plugin.verslsion>3.8.1</maven-compiler-plugin.verslsion>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <openapi-generator-version>4.3.1</openapi-generator-version>
+        <openapi-generator-version>5.1.0</openapi-generator-version>
         <spring-cloud-open-feign.version>2.2.3.RELEASE</spring-cloud-open-feign.version>
         <spring-cloud-release-train.version>Hoxton.SR6</spring-cloud-release-train.version>
         <jackson.version>2.6.6</jackson.version>
